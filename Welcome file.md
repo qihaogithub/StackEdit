@@ -1,8 +1,8 @@
 欢迎来到 StackEdit！
 
-嗨！我是你在** StackEdit **中创建的第一个 Markdown 文件。如果你想了解 StackEdit，可以阅读我。如果你想体验 Markdown 的用法，可以编辑我。完成之后，你可以通过打开导航栏左侧s 的**文件资源管理器**来创建新文件。
-sd sd 
-s 
+嗨！我是你在** StackEdit **中创建的第一个 Markdown 文件。如果你想了解 StackEdit，可以阅读我。如果你想体验 Markdown 的用法，可以编辑我。完成之后，你可以通过打开导航栏左侧的**文件资源管理器**来创建新文件。
+
+
 文件数
 
 StackEdit 会将您的文件存储在浏览器中，这意味着所有文件都会自动保存到本地，并且可以离线访问！
@@ -50,18 +50,18 @@ StackEdit 会将您的文件存储在浏览器中，这意味着所有文件都�
 
 ##同步文件
 
-文件链接到同步位置后，StackEdit 会定期下载/上传任何修改进行同步。如有必要，系统会执行合并操作并解决冲突。
+Once your file is linked to a synchronized location, StackEdit will periodically synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be resolved.
 
-如果您刚刚修改了文件，并且想要强制同步，请点击导航栏中的**立即同步**按钮。
+If you just have modified your file and you want to force syncing, click the **Synchronize now** button in the navigation bar.
 
-> **注意：**如果没有文件要同步，则“立即同步”按钮将处于禁用状态。 
+> **Note:** The **Synchronize now** button is disabled if you have no file to synchronize.
 
-##管理文件同步
+## Manage file synchronization
 
-由于一个文件可以同步到多个位置，您可以通过点击“同步”子菜单中的“文件同步”来列出和管理已同步的位置。这样，您可以列出和移除与您的文件关联的已同步位置。
+Since one file can be synced with multiple locations, you can list and manage synchronized locations by clicking **File synchronization** in the **Synchronize** sub-menu. This allows you to list and remove synchronized locations that are linked to your file.
 
 
-#出版物
+# Publication
 
 Publishing in StackEdit makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
 
@@ -142,5 +142,5 @@ B --> D{菱形}
 C --> D ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MTE3MzM0MjZdfQ==
+eyJoaXN0b3J5IjpbODgzNDY5NzU1LC0xODExNzMzNDI2XX0=
 -->
