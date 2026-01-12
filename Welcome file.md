@@ -1,7 +1,6 @@
-欢迎来到 StackEdit！
+欢迎来到StackEdit！
 
-嗨！我是你在** StackEdit **中创建的第一个 Markdown 文件。如果你想了解 StackEdit，可以阅读我。如果你想体验 Markdown 的用法，可以编辑我。完成之后，你可以通过打开导航栏左侧的**文件资源管理器**来创建新文件。
-
+嗨！我是你在** StackEdit **中创建的第一个Markdown 文件。如果你想了解StackEdit，可以阅读我。如果你想体验Markdown 的用法，可以编辑我。完成之后，你可以通过打开导航栏左侧的**文件资源管理器**来创建新文件。
 
 文件数
 
@@ -17,7 +16,7 @@ StackEdit 会将您的文件存储在浏览器中，这意味着所有文件都�
 
 ##重命名文件
 
-您可以通过单击导航栏中的文件名或单击文件资源管理器中的“**重命名**”按钮来重命名当前文件。
+您可以通过单击导航栏中的文件名或单击文件资源管理器中的“ **重命名** ”按钮来重命名当前文件。
 
 ##删除文件
 
@@ -25,16 +24,16 @@ StackEdit 会将您的文件存储在浏览器中，这意味着所有文件都�
 
 ##导出文件
 
-您可以通过点击菜单中的“导出到磁盘”来导出当前文件。您可以选择将文件导出为纯 Markdown 格式、使用 Handlebars 模板的 HTML 格式或 PDF 格式。
+您可以通过点击菜单中的“导出到磁盘”来导出当前文件。您可以选择将文件导出为纯Markdown 格式、使用Handlebars 模板的HTML 格式或PDF 格式。
 
 
 #同步
 
-同步是 StackEdit 的一大亮点。它能让您将工作区中的任何文件与存储在** Google Drive **、** Dropbox **和** GitHub **帐户中的其他文件同步。这样，您就可以在其他设备上继续编辑，与共享文件的人协作，轻松融入您的工作流程……同步机制每分钟在后台运行，下载、合并并上传文件修改。
+同步是StackEdit 的一大亮点。它能让您将工作区中的任何文件与存储在** Google Drive **、** Dropbox **和** GitHub **帐户中的其他文件同步。这样，您就可以在其他设备上继续编辑，与共享文件的人协作，轻松融入您的工作流程……同步机制每分钟在后台运行，下载、合并并上传文件修改。
 
 同步有两种类型，它们可以相互补充：
 
--工作区同步功能会自动同步您的所有文件、文件夹和设置。这样您就可以在任何其他设备上访问您的工作区。	>要开始同步您的工作区，只需在菜单中使用 Google 帐户登录即可。-文件同步功能会将工作区中的一个文件与 Google 云端硬盘、Dropbox 或 GitHub 中的一个或多个文件保持同步。 >开始同步文件之前，您必须在“同步	”子菜单中关联一个帐户。
+-工作区同步功能会自动同步您的所有文件、文件夹和设置。这样您就可以在任何其他设备上访问您的工作区。 >要开始同步您的工作区，只需在菜单中使用Google 帐户登录即可。 -文件同步功能会将工作区中的一个文件与Google 云端硬盘、Dropbox 或GitHub 中的一个或多个文件保持同步。 >开始同步文件之前，您必须在“同步”子菜单中关联一个帐户。
 
 
 
@@ -46,101 +45,101 @@ StackEdit 会将您的文件存储在浏览器中，这意味着所有文件都�
 
 ##保存文件
 
-您可以将工作区中的任何文件保存到Google云端硬盘、 Dropbox或GitHub，只需打开“同步”子菜单并点击“保存到”即可。即使工作区中的文件已经同步，您仍然可以将其保存到其他位置。StackEdit 可以将一个文件同步到多个位置和帐户。
+您可以将工作区中的任何文件保存到Google云端硬盘、 Dropbox或GitHub，只需打开“同步”子菜单并点击“保存到”即可。即使工作区中的文件已经同步，您仍然可以将其保存到其他位置。 StackEdit 可以将一个文件同步到多个位置和帐户。
 
 ##同步文件
 
-Once your file is linked to a synchronized location, StackEdit will periodically synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be resolved.
+文件链接到同步位置后，StackEdit 会定期下载/上传任何修改进行同步。如有必要，系统会执行合并操作并解决冲突。
 
-If you just have modified your file and you want to force syncing, click the **Synchronize now** button in the navigation bar.
+如果您刚刚修改了文件，并且想要强制同步，请点击导航栏中的**立即同步**按钮。
 
-> **Note:** The **Synchronize now** button is disabled if you have no file to synchronize.
+> **注意：**如果没有文件要同步，则“立即同步”按钮将处于禁用状态。 
 
-## Manage file synchronization
+##管理文件同步
 
-Since one file can be synced with multiple locations, you can list and manage synchronized locations by clicking **File synchronization** in the **Synchronize** sub-menu. This allows you to list and remove synchronized locations that are linked to your file.
-
-
-# Publication
-
-Publishing in StackEdit makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
-
-> Before starting to publish, you must link an account in the **Publish** sub-menu.
-
-## Publish a File
-
-You can publish your file by opening the **Publish** sub-menu and by clicking **Publish to**. For some locations, you can choose between the following formats:
-
-- Markdown: publish the Markdown text on a website that can interpret it (**GitHub** for instance),
-- HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
-
-## Update a publication
-
-After publishing, StackEdit keeps your file linked to that publication which makes it easy for you to re-publish it. Once you have modified your file and you want to update your publication, click on the **Publish now** button in the navigation bar.
-
-> **Note:** The **Publish now** button is disabled if your file has not been published yet.
-
-## Manage file publication
-
-Since one file can be published to multiple locations, you can list and manage publish locations by clicking **File publication** in the **Publish** sub-menu. This allows you to list and remove publication locations that are linked to your file.
+由于一个文件可以同步到多个位置，您可以通过点击“同步”子菜单中的“文件同步”来列出和管理已同步的位置。这样，您可以列出和移除与您的文件关联的已同步位置。
 
 
-# Markdown extensions
+#出版物
 
-StackEdit extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
+使用StackEdit 发布功能，您可以轻松地将文件发布到网上。文件完成后，您可以将其发布到不同的托管平台，例如** Blogger **、** Dropbox **、** Gist **、** GitHub **、** Google Drive **、** WordPress **和** Zendesk **。借助[ Handlebars 模板](http://handlebarsjs.com/) ，您可以完全控制导出的内容。
 
-> **ProTip:** You can disable any **Markdown extension** in the **File properties** dialog.
+>在开始发布之前，您必须在**发布**子菜单中关联一个帐户。
+
+##发布文件
+
+您可以通过打开“发布”子菜单并单击“发布到”来发布文件。对于某些地区，您可以选择以下格式：
+
+- Markdown：将Markdown 文本发布到可以解析它的网站（例如** GitHub **）， - HTML：将通过Handlebars 模板转换为HTML 的文件发布到博客上。
 
 
-## SmartyPants
+##更新出版物
 
-SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
+发布后，StackEdit 会将您的文件与该发布版本保持链接，方便您重新发布。修改文件后，如果您想更新发布版本，请点击导航栏中的“立即发布”按钮。
 
-|                |ASCII                          |HTML                         |
-|----------------|-------------------------------|-----------------------------|
-|Single backticks|`'Isn't this fun?'`            |'Isn't this fun?'            |
-|Quotes          |`"Isn't this fun?"`            |"Isn't this fun?"            |
-|Dashes          |`-- is en-dash, --- is em-dash`|-- is en-dash, --- is em-dash|
+> **注意：**如果您的文件尚未发布，则“立即发布”按钮将处于禁用状态。 
+
+##管理文件发布
+
+由于一个文件可以发布到多个位置，您可以通过点击“发布”子菜单中的“文件发布”来列出和管理发布位置。这样，您可以列出和删除与您的文件关联的发布位置。
+
+
+# Markdown 扩展
+
+StackEdit 通过添加额外的** Markdown 扩展**来扩展标准的Markdown 语法，为您提供一些不错的功能。
+
+> **专业提示：**您可以在“文件属性”对话框中禁用任何** Markdown 扩展名**。 
+
+
+##聪明裤
+
+SmartyPants 将ASCII 标点字符转换为“智能”的HTML 排版标点实体。例如：
+
+| | ASCII | HTML | |----------------|-------------------------------|-----------------------------| |单反引号| ` '这不是很有趣吗？ ' ` | '这不是很有趣吗？ ' | |引号| ` "这不是很有趣吗？" ` | "这不是很有趣吗？" | |破折号| ` -- 是短破折号，--- 是长破折号` | -- 是短破折号，--- 是长破折号|                
+
+            
+            
+
 
 
 ## KaTeX
 
-You can render LaTeX mathematical expressions using [KaTeX](https://khan.github.io/KaTeX/):
+您可以使用[ KaTeX ](https://khan.github.io/KaTeX/)渲染LaTeX 数学表达式：
 
-The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
+满足$ \Gamma ( n ) = ( n-1 ) ! \quad \forall n \in \mathbb N $的伽玛函数可以通过欧拉积分得到。
 
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
-
-> You can find more information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
+$$                 \Gamma                 ( z ) = \int _0^ \infty t^ { z-1 } e^ { -t } dt \, . $$
 
 
-## UML diagrams
 
-You can render UML diagrams using [Mermaid](https://mermaidjs.github.io/). For example, this will produce a sequence diagram:
+>您可以在这里找到更多关于** LaTeX **数学表达式的信息] (http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference) 。
 
-```mermaid
-sequenceDiagram
-Alice ->> Bob: Hello Bob, how are you?
-Bob-->>John: How about you John?
-Bob--x Alice: I am good thanks!
-Bob-x John: I am good thanks!
-Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
 
-Bob-->Alice: Checking with John...
-Alice->John: Yes... John, how are you?
-```
+## UML图
 
-And this will produce a flow chart:
+您可以使用[ Mermaid ](https://mermaidjs.github.io/)渲染 UML 图。例如，以下代码将生成一个序列图：
 
 ```美人鱼
-图 LR 
-A[方形矩形] -- 链接文本 --> B((圆形)) 
+序列图
+爱丽丝 ->> 鲍勃：你好，鲍勃，你好吗？
+鲍勃-->>约翰：你呢，约翰？
+鲍勃--x 爱丽丝：我很好，谢谢！
+鲍勃-x 约翰：我很好，谢谢！
+约翰右侧的注释：鲍勃思考了很久很久，久到文字都写不下一行。鲍勃-->爱丽丝：正在和约翰确认……爱丽丝->约翰：好的…… 约翰，你好吗？```
+
+
+
+
+
+这将生成一个流程图：
+
+` ` `美人鱼
+图LR 
+A[方形矩形] -- 链接文本--> B((圆形)) 
 A --> C(圆形矩形) 
 B --> D{菱形} 
-C --> D ```
+C --> D ` ` `
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODgzNDY5NzU1LC0xODExNzMzNDI2XX0=
+eyJoaXN0b3J5IjpbLTQxMTE1ODA3MSwtMTgxMTczMzQyNl19
 -->
