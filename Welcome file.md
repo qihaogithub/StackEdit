@@ -1,49 +1,56 @@
 
-在 Mac 连接局域网中的 Linux Mint 主机时，**首选建议使用 SMB (Server Message Block)**，其次是 **NFS**。
+从你提供的终端记录来看，核心问题是 **Bun 在安装 `opencode-antigravity-auth` 时遇到了 SSL 证书验证错误** (`UNKNOWN_CERTIFICATE_VERIFICATION_ERROR`)，导致安装失败。因为安装没成功，所以系统找不到 `opencode` 命令。
 
-以下是针对不同需求的详细对比和推荐理由：
+这种情况通常是因为网络环境（如代理、公司防火墙或在某些地区访问 npm 官方源不稳定）导致的。
 
-### 1. 首选推荐：SMB (推荐等级：⭐⭐⭐⭐⭐)
-SMB 是目前 macOS 默认且最兼容的网络协议。
-*   **优点：**
-    *   **原生支持：** Apple 已经弃用 AFP，现在全力优化 SMB。它是目前唯一能完美支持 macOS 文件标签（Tags）、颜色标记和 Spotlight 搜索的第三方协议。
-    *   **设置简单：** 在 Linux Mint 中，右键文件夹选择“分享选项”通常就是基于 Samba (SMB) 的，图形化操作非常友好。
-    *   **稳定性：** 断线自动重连机制在现代 macOS 中做得最好。
-*   **缺点：** 在传输大量极小文件（如代码仓库）时，速度略慢于 NFS。
-*   **适用人群：** 绝大多数家庭用户、设计师、办公用户。
+请按照以下步骤尝试修复：
 
-### 2. 性能之选：NFS (推荐等级：⭐⭐⭐⭐)
-NFS 是 Unix/Linux 系统的原生协议，Mac 对其支持也很好。
-*   **优点：**
-    *   **极高性能：** 在局域网带宽足够（千兆或万兆）时，NFS 的 CPU 开销最小，读写大文件的吞吐量通常略高于 SMB。
-    *   **挂载稳定：** 对于需要长期挂载当作本地硬盘使用的场景，NFS 表现非常稳健。
-*   **缺点：**
-    *   **配置较复杂：** 需要手动编辑 Linux 的 `/etc/exports` 文件。
-    *   **权限问题：** 需要处理 UID/GID 映射（Mac 的用户 ID 和 Linux 的要一致），否则会遇到“只读”或权限错误。
-    *   **兼容性：** 不支持 macOS 的 Finder 特有元数据（如文件标签、某些缩略图）。
-*   **适用人群：** 极客用户、需要频繁传输数 GB 级大文件、或进行 4K 视频剪辑的用户。
+### 1. 使用国内镜像源（推荐）
+SSL 错误通常是访问 `registry.npmjs.org` 不顺畅导致的。切换到淘宝镜像（npmmirror）通常能直接解决：
 
-### 3. 其他协议分析（为什么不推荐）
-*   **AFP (Apple Filing Protocol)：** **不推荐。** Apple 已经在 2024 年正式弃用该协议，未来版本的 macOS 可能会彻底移除连接能力。
-*   **SFTP：** 适合偶尔传个文件。它是通过 SSH 传输，安全性高但加密性能损耗大，挂载成磁盘后反应慢，不适合作为日常共享盘。
-*   **FTP：** **过时。** 安全性差，且 macOS Finder 现在的 FTP 支持极其简陋（常为只读）。
-*   **WebDAV (HTTP/HTTPS)：** 主要用于公网远程访问（类似网盘）。局域网内相比 SMB 没有任何优势，且 macOS 原生挂载 WebDAV 的性能和稳定性较差。
+```bash
+bun add opencode-antigravity-auth@latest -g --registry=https://registry.npmmirror.com
+```
+
+### 2. 在同一行命令中强制禁用 SSL 验证
+虽然你执行了 `export`，但有时 Bun 的二进制逻辑可能没有正确捕捉到。尝试将环境变量直接写在命令前：
+
+```bash
+NODE_TLS_REJECT_UNAUTHORIZED=0 bun add opencode-antigravity-auth@latest -g --force
+```
+
+### 3. 如果还是不行，改用 npm 安装
+如果 Bun 的网络模块由于某些原因持续报错，可以临时改用 `npm`（Node.js 自带的工具）来全局安装。`opencode` 本身是 JS 写的，用 npm 安装效果是一样的：
+
+```bash
+npm install -g opencode-antigravity-auth@latest
+```
+*(如果遇到权限问题，请在前面加 `sudo`)*
+
+### 4. 确认 PATH 路径
+安装成功后，如果依然提示 `command not found`，说明 Bun 的全局二进制目录没有添加到你的系统路径中。
+
+请检查并在你的 `~/.zshrc` 文件末尾添加以下行（如果你使用的是 Bun）：
+```bash
+export PATH="$HOME/.bun/bin:$PATH"
+```
+然后运行 `source ~/.zshrc` 生效。
+
+### 5. 重新运行并登录
+安装成功后，再次尝试：
+```bash
+opencode auth login
+```
 
 ---
 
-### 操作指南：如何在 Linux Mint 上快速设置 SMB
+### 为什么之前会失败？
+*   **SSL 错误**：你的网络环境无法验证 npm 官方服务器的证书。这在开启了某些 VPN 或处于受限网络时很常见。
+*   **Bun 缓存**：你之前尝试过 `bun pm cache clear`，但因为网络验证在缓存之前就失败了，所以清除缓存没有解决根本问题。
+*   **命令找不到**：因为 `bun add ... -g` 报了 `error`，所以它压根没有把可执行文件下载到你的电脑上。
 
-1.  **安装 Samba：**
-    打开终端输入：`sudo apt update && sudo apt install samba`
-2.  **设置分享目录：**
-    在文件管理器中，**右键**你想共享的文件夹 -> **分享选项** -> 勾选“共享此文件夹”、“允许他人创建和删除”。
-3.  **设置访问密码：**
-    由于局域网共享通常需要账户，在终端输入：`sudo smbpasswd -a 你的用户名`，然后设置一个密码。
-4.  **Mac 连接：**
-    在 Mac 上按 `Command + K`，输入：`smb://Mint主机的IP地址`，登录即可。
-
-**总结建议：** 如果你追求**省心和 Finder 的完美功能**，用 **SMB**；如果你追求**极限传输速度且不怕折腾配置文件**，用 **NFS**。
+**建议先尝试第 1 步（镜像源），这在 90% 的情况下能解决国内用户的此类问题。**
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1OTc1Nzc5OTIsLTE3OTk1MTA1MDEsLT
-E4MTE3MzM0MjZdfQ==
+eyJoaXN0b3J5IjpbMTQ2MDk2NTA0MiwtMTU5NzU3Nzk5MiwtMT
+c5OTUxMDUwMSwtMTgxMTczMzQyNl19
 -->
