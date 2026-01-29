@@ -1,56 +1,71 @@
 
-从你提供的终端记录来看，核心问题是 **Bun 在安装 `opencode-antigravity-auth` 时遇到了 SSL 证书验证错误** (`UNKNOWN_CERTIFICATE_VERIFICATION_ERROR`)，导致安装失败。因为安装没成功，所以系统找不到 `opencode` 命令。
+现在的情况是：**`npm` 其实已经安装成功了**（显示 `added 23 packages`），但由于你的 `nvm` 配置和 `.npmrc` 文件有冲突，导致生成的快捷命令（binary）没有被正确放入系统路径（PATH）中，所以提示 `command not found`。
 
-这种情况通常是因为网络环境（如代理、公司防火墙或在某些地区访问 npm 官方源不稳定）导致的。
+请按照以下步骤依次操作，彻底修复这个问题：
 
-请按照以下步骤尝试修复：
-
-### 1. 使用国内镜像源（推荐）
-SSL 错误通常是访问 `registry.npmjs.org` 不顺畅导致的。切换到淘宝镜像（npmmirror）通常能直接解决：
-
+### 第一步：找到 npm 到底把命令安哪了
+由于你的 `.npmrc` 里设置了 `prefix`，请运行以下命令查看安装路径：
 ```bash
-bun add opencode-antigravity-auth@latest -g --registry=https://registry.npmmirror.com
+npm config get prefix
+```
+通常它会输出一个路径，比如 `/usr/local` 或者 `/Users/qh2/.npm-global`。
+**在这个路径后面加一个 `/bin/opencode`**，尝试直接运行它（看能不能打开）。例如：
+```bash
+# 假设 prefix 输出是 /usr/local
+/usr/local/bin/opencode --version
 ```
 
-### 2. 在同一行命令中强制禁用 SSL 验证
-虽然你执行了 `export`，但有时 Bun 的二进制逻辑可能没有正确捕捉到。尝试将环境变量直接写在命令前：
+### 第二步：修复 nvm 的冲突（关键）
+你看到的警告 `Your user’s .npmrc file has a prefix setting, which are incompatible with nvm` 是导致命令失效的主因。
 
-```bash
-NODE_TLS_REJECT_UNAUTHORIZED=0 bun add opencode-antigravity-auth@latest -g --force
-```
+1.  **删除 `.npmrc` 中的 prefix 配置**：
+    运行以下命令打开配置文件：
+    ```bash
+    nano ~/.npmrc
+    ```
+    找到包含 `prefix=` 的那一行，把它删掉或在前面加 `;` 注释掉。按 `Ctrl+O` 保存，`Ctrl+X` 退出。
 
-### 3. 如果还是不行，改用 npm 安装
-如果 Bun 的网络模块由于某些原因持续报错，可以临时改用 `npm`（Node.js 自带的工具）来全局安装。`opencode` 本身是 JS 写的，用 npm 安装效果是一样的：
+2.  **按照提示强制解绑**：
+    运行你屏幕上提示的那行命令：
+    ```bash
+    nvm use --delete-prefix v20.19.0 --silent
+    ```
 
+### 第三步：在 nvm 环境下重新安装
+现在环境干净了，用 npm 重新装一次，它会自动把命令挂载到 nvm 的当前版本路径下：
 ```bash
 npm install -g opencode-antigravity-auth@latest
 ```
-*(如果遇到权限问题，请在前面加 `sudo`)*
 
-### 4. 确认 PATH 路径
-安装成功后，如果依然提示 `command not found`，说明 Bun 的全局二进制目录没有添加到你的系统路径中。
+### 第四步：如果还是不行，使用“暴力”直接运行法
+如果上面的配置太麻烦，或者你急着使用，可以直接用 `npx` 运行，它会跳过路径查找：
 
-请检查并在你的 `~/.zshrc` 文件末尾添加以下行（如果你使用的是 Bun）：
 ```bash
-export PATH="$HOME/.bun/bin:$PATH"
+npx opencode-antigravity-auth auth login
 ```
-然后运行 `source ~/.zshrc` 生效。
-
-### 5. 重新运行并登录
-安装成功后，再次尝试：
+或者
 ```bash
-opencode auth login
+npx opencode auth login
 ```
 
----
+### 第五步：检查 Bun 的路径（备选）
+如果你以后还想用 `bun` 安装，请确保你的 `~/.zshrc` 里有这一行（你之前加过，但可能路径不对）：
+1. 检查 `bun` 的实际 bin 目录：
+   ```bash
+   echo $HOME/.bun/bin
+   ```
+2. 确保在 `~/.zshrc` 中：
+   ```bash
+   export PATH="$HOME/.bun/bin:$PATH"
+   ```
+3. **重启终端**（非常重要，`source` 有时在处理 alias 冲突时不彻底）。
 
-### 为什么之前会失败？
-*   **SSL 错误**：你的网络环境无法验证 npm 官方服务器的证书。这在开启了某些 VPN 或处于受限网络时很常见。
-*   **Bun 缓存**：你之前尝试过 `bun pm cache clear`，但因为网络验证在缓存之前就失败了，所以清除缓存没有解决根本问题。
-*   **命令找不到**：因为 `bun add ... -g` 报了 `error`，所以它压根没有把可执行文件下载到你的电脑上。
-
-**建议先尝试第 1 步（镜像源），这在 90% 的情况下能解决国内用户的此类问题。**
+### 总结建议
+你的 `npm` 已经装上了，只是“藏”在了某个 nvm 找不到的地方。**最快的办法是：**
+1. 运行 `nvm use --delete-prefix v20.19.0`
+2. 重新 `npm install -g opencode-antigravity-auth@latest`
+3. 再次输入 `opencode` 即可。
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ2MDk2NTA0MiwtMTU5NzU3Nzk5MiwtMT
-c5OTUxMDUwMSwtMTgxMTczMzQyNl19
+eyJoaXN0b3J5IjpbNjAzMzA0ODA5LC0xNTk3NTc3OTkyLC0xNz
+k5NTEwNTAxLC0xODExNzMzNDI2XX0=
 -->
