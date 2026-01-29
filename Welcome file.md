@@ -1,59 +1,63 @@
 
-看来 `opencode-antigravity-auth` 这个包的安装路径和可执行文件名称比较特殊，加上你的 `nvm` 和 `npm prefix` 冲突，导致现在处于“包在电脑里，但系统死活找不到”的状态。
+这非常奇怪：`npm` 明确提示 `added 23 packages`（安装成功），但 NVM 的 `bin` 目录下却没有生成任何名为 `opencode` 的快捷方式。
 
-请按照这个**最终方案**操作，我们彻底重置环境并重新安装：
+这通常只有两种可能：
+1. **这个包定义的命令名根本不叫 `opencode`。**
+2. **这个包在 `package.json` 里没有声明 `bin` 字段（即它不是一个命令行工具）。**
 
-### 1. 彻底清除冲突的配置（关键）
-你的 `.npmrc` 里的 `prefix` 设置和 `nvm` 严重冲突，这是导致命令无法被识别的根源。
+让我们通过以下步骤通过“手动搜寻”来解决：
 
+### 1. 查找这个包到底把命令装哪了
+请执行以下命令，查看该包的详细安装信息：
 ```bash
-# 1. 自动删除 .npmrc 中的 prefix 行
-sed -i '' '/prefix=/d' ~/.npmrc
-
-# 2. 告诉 nvm 恢复正常状态
-nvm use --delete-prefix v20.19.0
+npm list -g opencode-antigravity-auth
+```
+并查看它的文件结构，寻找可执行文件：
+```bash
+ls -R $(npm list -g --parseable opencode-antigravity-auth) | grep -E "bin|opencode"
 ```
 
-### 2. 重新安装（使用镜像源避开 SSL 错误）
-我们不使用 Bun，改用已经能跑通下载的 `npm`，但这次装在 `nvm` 的标准路径下：
-
+### 2. 检查该包支持的命令
+运行以下命令，直接查看该包的 `package.json` 定义了什么命令：
 ```bash
-# 使用淘宝镜像源安装，避开之前的证书错误
-NODE_TLS_REJECT_UNAUTHORIZED=0 npm install -g opencode-antigravity-auth@latest --registry=https://registry.npmmirror.com
+cat $(npm list -g --parseable opencode-antigravity-auth)/package.json | grep -A 5 '"bin"'
 ```
-
-### 3. 确认二进制命令的真实名称
-安装完成后，不要直接猜命令叫 `opencode`。我们让系统告诉你它把命令装哪了，叫什么：
-
-```bash
-# 看看 nvm 的 bin 目录下到底多了什么
-ls $(dirname $(which node)) | grep opencode
-```
-
-*   **如果输出了 `opencode`**：那么直接运行 `opencode auth login`。
-*   **如果输出了 `opencode-antigravity-auth`**：那么命令其实是 `opencode-antigravity-auth auth login`。
-*   **如果什么都没输出**：说明这个包可能没有定义全局二进制符号。
-
-### 4. 万能备选方案：直接运行安装后的 JS 文件
-如果全局命令依然失效，我们可以直接去它安装的地方运行。请依次执行：
-
-```bash
-# 寻找安装路径
-export OPENCODE_PATH=$(npm list -g --parseable opencode-antigravity-auth)
-echo "安装路径在: $OPENCODE_PATH"
-
-# 尝试直接用 node 运行它
-node $OPENCODE_PATH/bin/opencode.js auth login
-```
-*(注意：上面的 `bin/opencode.js` 是猜测路径，如果报错，请运行 `ls -R $OPENCODE_PATH` 查看实际的 bin 文件名)*
+**如果返回结果是空的，或者 `bin` 下面写的不是 `opencode`，那我们就找到了原因。**
 
 ---
 
-### 为什么之前 `npx` 报错？
-`npx opencode-antigravity-auth` 报错是因为 `npx` 默认寻找和包名同名的命令。如果包名叫 `opencode-antigravity-auth` 但命令叫 `opencode`，`npx` 就会犯糊涂。
+### 3. 终极尝试：直接运行 JS 文件
+如果系统始终不生成快捷命令，我们可以绕过环境变量，直接运行它的源码。
 
-**现在请执行第 1 和 第 2 步，然后告诉我第 3 步 `ls` 的输出结果。**
+请尝试执行（这行命令会自动寻找安装路径并执行）：
+```bash
+node $(npm list -g --parseable opencode-antigravity-auth)/bin/opencode.js auth login
+```
+或者（如果是 index.js）：
+```bash
+node $(npm list -g --parseable opencode-antigravity-auth)/index.js auth login
+```
+
+### 4. 重新安装官方正确的包（怀疑包名）
+我注意到你安装的是 `opencode-antigravity-auth`。请确认一下：**这个工具的包名是否确定是这个？** 有没有可能是 `opencode-cli` 或者直接就叫 `opencode`？
+
+如果你确定是这个包，但它是内部工具，尝试先卸载再清理安装：
+```bash
+npm uninstall -g opencode-antigravity-auth
+npm cache clean --force
+NODE_TLS_REJECT_UNAUTHORIZED=0 npm install -g opencode-antigravity-auth@latest --registry=https://registry.npmmirror.com
+```
+
+### 5. 检查 NVM 路径是否真的在工作
+请执行：
+```bash
+which npm
+```
+它应该输出类似 `/Users/qh2/.nvm/versions/node/v20.19.0/bin/npm`。
+如果输出的不是这个路径，说明 NVM 还没接管你的环境。
+
+**请告诉我第 2 步 `cat ... package.json` 的输出，这能告诉我们这个工具“真正的名字”是什么。**
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMTAyMjMzOTcsLTE1OTc1Nzc5OTIsLT
-E3OTk1MTA1MDEsLTE4MTE3MzM0MjZdfQ==
+eyJoaXN0b3J5IjpbMTQ4MTUzNTczMCwtMTU5NzU3Nzk5MiwtMT
+c5OTUxMDUwMSwtMTgxMTczMzQyNl19
 -->
