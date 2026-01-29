@@ -17,9 +17,11 @@
 *   **建立“专家-助手”协作模式**：主智能体扮演“首席架构师”，负责下令；子智能体扮演“侦察员”，负责踩点。
 *   **标准化产出**：通过固定的报告模板，为主智能体提供结构化的、一致的输入，使得 Debug 过程从“碰运气搜索”变成“标准化作业”。
 
+```
 
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgyNDg5NjczMSwxOTc4Mzg2MTQ5LDE5Nz
-g4MDYzNTAsLTE1OTc1Nzc5OTIsLTE3OTk1MTA1MDEsLTE4MTE3
-MzM0MjZdfQ==
+eyJoaXN0b3J5IjpbLTE5OTgyMDI4NzEsLTgyNDg5NjczMSwxOT
+c4Mzg2MTQ5LDE5Nzg4MDYzNTAsLTE1OTc1Nzc5OTIsLTE3OTk1
+MTA1MDEsLTE4MTE3MzM0MjZdfQ==
 -->
