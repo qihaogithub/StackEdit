@@ -1,88 +1,28 @@
 
-既然你想彻底“删干净再重装”，我们就执行一次最彻底的清理。按照这个顺序操作，可以解决 **路径错乱、包名不对、SSL报错** 这三大问题。
+总结来说，制作这个子智能体（Sub-Agent）的核心目标是实现**“高效率、低成本、高精度的上下文预处理”**。
 
-### 第一步：彻底删除（删干净）
+具体可以概括为以下四个核心维度：
 
-请依次执行以下命令，把所有可能冲突的地方都删掉：
+### 1. 成本优化（Cost Efficiency）
+*   **算力分级**：将“翻阅大量代码、搜索关键词、整理文件结构”等资源消耗大、但逻辑难度低的**体力劳动**，交给价格极低的低阶模型。
+*   **Token 瘦身**：通过只产出“文件路径+行号索引”而非大段代码，极大地节省了主智能体（高阶模型）的输入 Token 消耗，把昂贵的算力用在真正的逻辑推理上。
 
-```bash
-# 1. 卸载所有相关的全局包
-npm uninstall -g opencode opencode-antigravity-auth
-bun remove -g opencode opencode-antigravity-auth
+### 2. 认知聚焦（Cognitive Focus）
+*   **脱水与精炼**：将用户模糊的自然语言描述，转化为程序员视角下的“逻辑地图”。
+*   **排除噪音**：主智能体不再需要处理几千行无关代码，而是通过子智能体指路，直接“精准打击”关键逻辑块，避免主智能体因上下文过载而产生逻辑混乱（Lost in the Middle）。
 
-# 2. 删除本地缓存和配置文件（这会让 opencode 像新装一样）
-rm -rf ~/.opencode
-rm -rf ~/.bun/install/cache/opencode*
-rm -rf /Users/qh2/.npm-global/bin/opencode
+### 3. 证据导向（Evidence-Based Debugging）
+*   **索引化引用**：强制主智能体通过子智能体提供的“地址”亲自读取源码，而不是被动接受子智能体转述的代码。这保证了信息的**原始性**和**完整性**。
+*   **事实与判断分离**：明确区分“代码事实（文件/行号/逻辑流）”与“初步推测（假设）”，防止子智能体较低的智力水平产生的误判污染了主智能体的决策，确保主智能体保持独立思考。
 
-# 3. 清理 npm 和 nvm 的冲突配置
-sed -i '' '/prefix=/d' ~/.npmrc
-nvm use --delete-prefix v20.19.0
-```
+### 4. 自动化工程闭环（Workflow Automation）
+*   **建立“专家-助手”协作模式**：主智能体扮演“首席架构师”，负责下令；子智能体扮演“侦察员”，负责踩点。
+*   **标准化产出**：通过固定的报告模板，为主智能体提供结构化的、一致的输入，使得 Debug 过程从“碰运气搜索”变成“标准化作业”。
 
----
-
-### 第二步：正确重装（安装主程序）
-
-你之前安装的 `opencode-antigravity-auth` 极大概率**只是一个插件**，不包含 `opencode` 这个命令。**主程序的包名通常就叫 `opencode`。**
-
-请使用以下命令重装主程序（使用镜像源确保成功）：
-
-```bash
-# 使用 NODE_TLS_REJECT_UNAUTHORIZED=0 解决你之前的证书报错
-NODE_TLS_REJECT_UNAUTHORIZED=0 npm install -g opencode@latest --registry=https://registry.npmmirror.com
-```
-
-**如果上面的命令报错“404 Not Found”，说明包名确实是那个长的，请换成这个：**
-```bash
-NODE_TLS_REJECT_UNAUTHORIZED=0 npm install -g opencode-antigravity-auth@latest --registry=https://registry.npmmirror.com
-```
-
----
-
-### 第三步：检查安装结果（非常重要）
-
-安装完后，我们立刻检查命令到底生成没有：
-
-```bash
-# 看看 nvm 的目录下有没有 opencode
-ls $(dirname $(which node)) | grep opencode
-```
-
-**检查结果处理：**
-
-1.  **如果输出了 `opencode`**：恭喜，直接运行 `opencode auth login`。
-2.  **如果还是空的**：说明 `opencode-antigravity-auth` 这个包真的没有提供命令行工具。
-
----
-
-### 第四步：如果还是不行，最后的“绝招”
-
-如果重装了还是 `command not found`，说明这个包的代码写得有问题，没自动创建快捷方式。我们可以**手动创建一个强制连接**：
-
-```bash
-# 找到包的实际安装位置
-PACKAGE_PATH=$(npm list -g --parseable opencode-antigravity-auth)
-
-# 强制把它的启动脚本链接到你的系统路径
-ln -sf "$PACKAGE_PATH/bin/opencode.js" $(dirname $(which node))/opencode
-
-# 给它执行权限
-chmod +x $(dirname $(which node))/opencode
-```
-
-执行完这三行，再输入 `opencode` 就百分之百能打开了。
-
----
-
-### 总结
-你现在的核心矛盾是：
-1. **包名可能装错了**（主程序通常叫 `opencode`）。
-2. **NVM 环境不纯净**（通过第一步的 `sed` 和 `nvm use` 已解决）。
-3. **网络证书报错**（通过 `NODE_TLS_REJECT_UNAUTHORIZED=0` 已解决）。
-
-**请先执行第一步和第二步（装 `opencode` 而不是 `...auth`），如果报错再告诉我。**
+**一句话总结：**
+该子智能体的目标是作为主智能体的**“眼睛”和“地图导购”**，负责**跑腿搜集证据**并**指明关键方位**，从而让主智能体这个**“大脑”**能在最短的时间内、用最少的开销，基于最准确的代码事实做出修复决策。
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk3ODM4NjE0OSwxOTc4ODA2MzUwLC0xNT
-k3NTc3OTkyLC0xNzk5NTEwNTAxLC0xODExNzMzNDI2XX0=
+eyJoaXN0b3J5IjpbMjEzNjg3MDQxNiwxOTc4Mzg2MTQ5LDE5Nz
+g4MDYzNTAsLTE1OTc1Nzc5OTIsLTE3OTk1MTA1MDEsLTE4MTE3
+MzM0MjZdfQ==
 -->
