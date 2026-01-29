@@ -10,7 +10,7 @@
 *   **排除噪音**：主智能体不再需要处理几千行无关代码，而是通过子智能体指路，直接“精准打击”关键逻辑块，避免主智能体因上下文过载而产生逻辑混乱（Lost in the Middle）。
 
 ### 3. 证据导向（Evidence-Based Debugging）
-*   **索引化引用**：强制主智能体通过子智能体提供的“地址”亲自读取源码，而不是被动接受子智能体转述的代码。这保证了信息的**原始性**和**完整性**。
+*   **索引化引用**：主智能体通过子智能体提供的“地址”亲自读取源码，而不是被动接受子智能体转述的代码。这保证了信息的**原始性**和**完整性**。
 *   **事实与判断分离**：明确区分“代码事实（文件/行号/逻辑流）”与“初步推测（假设）”，防止子智能体较低的智力水平产生的误判污染了主智能体的决策，确保主智能体保持独立思考。
 
 ### 4. 自动化工程闭环（Workflow Automation）
@@ -19,7 +19,7 @@
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMzM3NTAzNzQsMTk3ODM4NjE0OSwxOT
-c4ODA2MzUwLC0xNTk3NTc3OTkyLC0xNzk5NTEwNTAxLC0xODEx
-NzMzNDI2XX0=
+eyJoaXN0b3J5IjpbMTk5NzU1NjcwMiwxOTc4Mzg2MTQ5LDE5Nz
+g4MDYzNTAsLTE1OTc1Nzc5OTIsLTE3OTk1MTA1MDEsLTE4MTE3
+MzM0MjZdfQ==
 -->
