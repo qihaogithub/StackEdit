@@ -1,5 +1,5 @@
 
-我在使用ai编程修复bug时，当我直接把问题丢给ai，ai会进行大量的检索工作，非常浪费token，我想要做个子智能体（Sub-Agent）的核心目标是实现**“高效率、低成本、高精度的上下文预处理”**。
+我在使用ai编程修复bug时，当我直接把问题丢给ai，ai会进行大量的检索工作，非常浪费token，我想要做个子智能体，核心目标是实现**“高效率、低成本、高精度的上下文预处理”**。
 
 该子智能体的目标是作为主智能体的**“眼睛”和“地图导购”**，负责**跑腿搜集证据**并**指明关键方位**，从而让主智能体这个**“大脑”**能在最短的时间内、用最少的开销，基于最准确的代码事实做出修复决策。
 具体可以概括为以下四个核心维度：
@@ -22,7 +22,7 @@
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMjkwNDU3ODUsMTk3ODM4NjE0OSwxOT
-c4ODA2MzUwLC0xNTk3NTc3OTkyLC0xNzk5NTEwNTAxLC0xODEx
-NzMzNDI2XX0=
+eyJoaXN0b3J5IjpbLTU2NzE4NDQxMiwxOTc4Mzg2MTQ5LDE5Nz
+g4MDYzNTAsLTE1OTc1Nzc5OTIsLTE3OTk1MTA1MDEsLTE4MTE3
+MzM0MjZdfQ==
 -->
